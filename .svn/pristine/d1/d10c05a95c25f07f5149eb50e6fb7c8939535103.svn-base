@@ -1,0 +1,30 @@
+<div ng-app="myApp.fileUpload" ng-controller="MyCtrl">
+
+
+    <div class="upload-area">
+        <button class="btn btn-default" ngf-select ng-model="files" ngf-multiple="multiple">Select File</button>
+        <button class="btn btn-success" ng-show="importable == true" ng-click="import()">import data</button>
+
+        Files: <span ng-repeat="f in files" >{{f.name}}</span>
+    </div>
+
+    <br>
+
+    <div class="progress">
+        <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: {{percent}}%">
+            <span class="sr-only">{{percent}}% Complete (success)</span>
+        </div>
+    </div>
+
+    Upload Log:
+    <pre>{{log}}</pre>
+</div>
+</div>
+<style>
+    .upload-area {
+        padding: 15px;
+        border: 2px dashed #F1F1F1;
+        border-radius: 5px;
+        line-height: 34px;
+    }
+</style>

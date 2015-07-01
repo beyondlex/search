@@ -1,0 +1,101 @@
+<!--<div class="container" ng-controller="RecordsCtrl">-->
+<div class="container">
+
+    <div class="row">
+        <form class="form-inline">
+            <label class="">性别：</label>
+            <select class="form-control" ng-model="inputGender" ng-change="search()">
+                <option value="">不限</option>
+                <option value="男">男</option>
+                <option value="女">女</option>
+            </select>
+            <label class="">年龄段：</label>
+            <input type="number" class="form-control number-age" ng-model="inputAgeFrom" ng-model-options="{ debounce: 500 }" ng-change="search()">
+            - <input type="number" class="form-control number-age" ng-model="inputAgeTo" ng-change="search()">
+
+            <input placeholder="年级" class="form-control" type="text"
+                   typeahead="state for state in grades | filter:$viewValue | limitTo:8"
+                   ng-model="inputGrade" ng-keyup="searchByInput($event)">
+
+            <input placeholder="层次" class="form-control" type="text"
+                   typeahead="state for state in degrees | filter:$viewValue | limitTo:8"
+                   ng-model="inputDegree" ng-keyup="searchByInput($event)">
+
+            <input placeholder="专业" class="form-control" type="text"
+                   typeahead="state for state in majors | filter:$viewValue | limitTo:8"
+                   ng-model="inputMajor" ng-keyup="searchByInput($event)">
+
+        </form>
+    </div>
+
+    <style>
+        .number-age{
+            width: 100px!important;
+        }
+        .loader{
+            margin-top:120px;
+        }
+    </style>
+
+    <div class="row" >
+        <pagination max-size="10" rotate="false"
+                    boundary-links="true"
+                    total-items="totalItems"
+                    ng-model="currentPage"
+                    num-pages="numPages"
+                    previous-text="上一页"
+                    next-text="下一页"
+                    first-text="首页"
+                    last-text="尾页"
+                    ng-change="search()"></pagination>
+    </div>
+
+    <div class="row">
+        <h4>
+            <span class="label label-primary">共{{numPages}}页</span>
+            <span class="label label-primary">{{totalItems}}条记录</span>
+        </h4>
+    </div>
+
+    <br>
+
+    <div class="row" >
+
+        <div cg-busy="{promise:busy,message:'incoming..', templateUrl:'records/busy.html'}">
+
+        <table class="table table-striped" >
+            <tr>
+                <th>学号</th>
+                <th>姓名</th>
+                <th>年龄</th>
+                <th>性别</th>
+                <th>身份证</th>
+                <th>年级</th>
+                <th>层次</th>
+                <th>专业</th>
+                <th>省份</th>
+                <th>城市</th>
+            </tr>
+
+            <tr ng-repeat="record in records.data">
+                <td>{{record.sno}}</td>
+                <td>{{record.user_name}}</td>
+                <td>{{record.age}}</td>
+                <td>{{record.gender}}</td>
+                <td>{{record.id_card}}</td>
+                <td>{{record.grade}}</td>
+                <td>{{record.degree}}</td>
+                <td>{{record.major}}</td>
+                <td>{{record.phone_province}}</td>
+                <td>{{record.phone_city}}</td>
+            </tr>
+        </table>
+
+        </div>
+    </div>
+
+    <!--<div class="row" ng-hide="totalItems == 0 || pending">-->
+
+
+
+</div>

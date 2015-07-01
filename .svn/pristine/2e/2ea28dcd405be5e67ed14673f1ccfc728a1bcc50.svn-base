@@ -1,0 +1,75 @@
+'use strict';
+
+angular.module('myApp.records', ['ngRoute'])
+
+    .config(['$routeProvider', function($routeProvider) {
+        $routeProvider.when('/records', {
+            templateUrl: 'records/records.html',
+            controller: 'RecordsCtrl'
+        });
+    }])
+
+    .controller('RecordsCtrl', ['$scope', '$http', 'Records', function ($scope,  $http, Records) {
+
+        $scope.currentPage = 1;
+        $scope.itemsPerPage = 10;
+        $scope.totalItems = 0;
+        $scope.pending = false;
+
+
+        $scope.inputAgeFrom = 3;
+        $scope.inputAgeTo = 100;
+
+        $scope.getSearchParams = function() {
+            return {
+                "inputDegree":$scope.inputDegree,
+                "inputMajor":$scope.inputMajor,
+                "inputGrade":$scope.inputGrade,
+                "inputGender":$scope.inputGender,
+                "inputAgeFrom":$scope.inputAgeFrom,
+                "inputAgeTo":$scope.inputAgeTo
+            }
+        }
+
+        $scope.search = function () {
+            $scope.pending = true;
+
+            Records.getRecordsByInput( $scope.currentPage, $scope.itemsPerPage, $scope.getSearchParams())
+                .then(function (res) {
+                    $scope.records = res.data;
+                    $scope.totalItems = res.data.total;
+                    $scope.pending = false;
+
+                }, function() {
+                    $scope.pending = false;
+                }
+            );
+        }
+
+        $scope.search();
+
+        $scope.searchByInput = function($e) {
+            console.log($e);
+            if ($e.keyCode != 13) return;
+
+            $scope.searchAction();
+        }
+
+        $scope.searchAction = function() {
+            $scope.pending = true;
+
+            Records.getRecordsByInput($scope.currentPage, $scope.itemsPerPage, $scope.getSearchParams())
+                .then(function (res) {
+                    $scope.records = res.data;
+                    $scope.totalItems = res.data.total;
+                    $scope.pending = false;
+
+                }, function() {
+                    $scope.pending = false;
+                }
+            );
+        }
+
+        //$scope.$watch($scope.inputGender, $scope.searchAction);
+
+    }]);

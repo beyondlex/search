@@ -1,0 +1,130 @@
+<!--<div class="container" ng-controller="RecordsCtrl">-->
+<div class="container">
+
+    <div class="row">
+        <div >
+            <form class="form-inline">
+                <!--<input placeholder="年级" class="form-control" type="text"-->
+                       <!--typeahead="grade for grade in grades | filter:$viewValue | limitTo:8"-->
+                       <!--typeahead-focus-first = "false"-->
+                       <!--ng-model="inputGrade" ng-keyup="searchByInput($event)">-->
+
+                <select class="form-control"
+                        ng-options="grade for grade in grades"
+                        ng-model="inputGrade"
+                        ng-change="search()">
+                    <option value="">-- 选择年级 --</option>
+                </select>
+                <select class="form-control"
+                        ng-options="degree for degree in degrees"
+                        ng-model="inputDegree"
+                        ng-change="search()">
+                    <option value="">-- 选择层次 --</option>
+                </select>
+                <select class="form-control"
+                        ng-options="major for major in majors"
+                        ng-model="inputMajor"
+                        ng-change="search()">
+                    <option value="">-- 选择专业 --</option>
+                </select>
+
+                <label class="">性别：</label>
+                <select class="form-control" ng-model="inputGender" ng-change="search()">
+                    <option value="">不限</option>
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                </select>
+
+                <span style="width:340px;float:right;"
+                      filter="age"
+                      orientation="left"
+                      range-slider min="3" max="80"
+                      model-min="inputAgeFrom" model-max="inputAgeTo"
+                      on-handle-up="search()"></span>
+
+            </form>
+
+            <!--<div style="float:left;margin-top:10px">-->
+                <!--<label style="float:left;margin-top:5px;" class="">年龄段：</label>-->
+                <!--&lt;!&ndash;<input type="number" min="0" size="20" class="form-control number-age" ng-model="inputAgeFrom" ng-model-options="{ debounce: 500 }" ng-change="search()">&ndash;&gt;-->
+                <!--&lt;!&ndash;- <input type="number" class="form-control number-age" ng-model="inputAgeTo" ng-model-options="{ debounce: 500 }" ng-change="search()">&ndash;&gt;-->
+                <!--<span style="width:340px" orientation="left" attach-handle-values="true" range-slider min="3" max="80" model-min="inputAgeFrom" model-max="inputAgeTo" on-handle-up="search()"></span>-->
+            <!--</div>-->
+
+        </div>
+
+    </div>
+
+    <style>
+        .number-age{
+            width: 100px!important;
+        }
+        .loader{
+            margin-top:120px;
+        }
+        .ngrs-range-slider {
+            margin:0px!important;
+        }
+    </style>
+
+    <div class="row" >
+        <pagination max-size="10" rotate="false"
+                    boundary-links="true"
+                    total-items="totalItems"
+                    ng-model="currentPage"
+                    num-pages="numPages"
+                    previous-text="上一页"
+                    next-text="下一页"
+                    first-text="首页"
+                    last-text="尾页"
+                    ng-change="search()"></pagination>
+    </div>
+
+    <div class="row">
+        <h4>
+            <span class="label label-primary">共{{numPages}}页</span>
+            <span class="label label-primary">{{totalItems}}条记录</span>
+        </h4>
+    </div>
+
+    <br>
+
+    <div class="row" >
+
+        <div cg-busy="{promise:busy,message:'incoming..', templateUrl:'records/busy.html'}">
+
+        <table class="table table-striped" >
+            <tr>
+                <th>学号</th>
+                <th>姓名</th>
+                <th>年龄</th>
+                <th>性别</th>
+                <th>身份证</th>
+                <th>年级</th>
+                <th>层次</th>
+                <th>专业</th>
+                <th>省份</th>
+                <th>城市</th>
+            </tr>
+
+            <tr ng-repeat="record in records.data">
+                <td>{{record.sno}}</td>
+                <td>{{record.user_name}}</td>
+                <td>{{record.age}}</td>
+                <td>{{record.gender}}</td>
+                <td>{{record.id_card}}</td>
+                <td>{{record.grade}}</td>
+                <td>{{record.degree}}</td>
+                <td>{{record.major}}</td>
+                <td>{{record.phone_province}}</td>
+                <td>{{record.phone_city}}</td>
+            </tr>
+
+        </table>
+
+        </div>
+    </div>
+
+    <!--<div class="row" ng-hide="totalItems == 0 || pending">-->
+
+</div>
