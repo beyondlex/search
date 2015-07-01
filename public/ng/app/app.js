@@ -11,7 +11,8 @@ angular.module('myApp', [
     //'myApp.view2',
     'myApp.version',
     'myApp.fileUpload',
-    'myApp.records'
+    'myApp.records',
+    'myApp.charts'
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider
