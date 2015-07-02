@@ -32,6 +32,16 @@ angular.module('myApp.services', ['ngResource'])
                         params:{},
                         withCredentials: true
                     })
+                },
+
+                chartGender:function() {
+                    return $http.get('/api/chart/gender');
+                },
+                chartMajor:function() {
+                    return $http.get('/api/chart/major');
+                },
+                chartAge:function() {
+                    return $http.get('/api/chart/age');
                 }
             };
 

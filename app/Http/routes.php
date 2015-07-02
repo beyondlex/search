@@ -29,6 +29,9 @@ Route::group(['prefix' => 'api/records'], function () {
     Route::get('grades', 'RecordController@grades');
 });
 Route::get('/api/records/byInput', 'RecordController@byInput');
+Route::get('/api/chart/gender', 'RecordController@chartGender');
+Route::get('/api/chart/major', 'RecordController@chartMajor');
+Route::get('/api/chart/age', 'RecordController@chartAge');
 
 //phoneupdate
 Route::get('/phone/update', 'PhoneUpdateController@index');

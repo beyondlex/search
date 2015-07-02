@@ -95,6 +95,23 @@ class RecordController extends Controller
 
     }
 
+    public function chartGender(Request $request) {
+        $res = Record::selectRaw('count(*) as y, gender as name');
+        $res = $res->groupBy('gender');
+        return $res->get()->toJson();
+    }
+    public function chartMajor(Request $request) {
+        $res = Record::selectRaw('count(*) as y, major as name');
+        $res = $res->groupBy('major');
+        return $res->get()->toJson();
+    }
+    public function chartAge(Request $request) {
+        $res = DB::select('select count(*) as y, year(NOW()) - substr(id_card,7,4) as name from records group by (year(NOW()) - substr(id_card,7,4)) ');
+
+        return response()->json($res);
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
